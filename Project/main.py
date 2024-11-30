@@ -38,8 +38,27 @@ cv2.putText(paintWindow, "RED", (420, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0,
 cv2.putText(paintWindow, "YELLOW", (520, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
 cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
 
+
+# Initialize the webcam
+cap = cv2.VideoCapture(0)
 ret = True
 while ret:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    
+    frame = cv2.rectangle(frame, (40,1), (140,65), (0,0,0), 2)
+    frame = cv2.rectangle(frame, (160,1), (255,65), (255,0,0), 2)
+    frame = cv2.rectangle(frame, (275,1), (370,65), (0,255,0), 2)
+    frame = cv2.rectangle(frame, (390,1), (485,65), (0,0,255), 2)
+    frame = cv2.rectangle(frame, (505,1), (600,65), (0,255,255), 2)
+    cv2.putText(frame, "CLEAR", (49, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "BLUE", (185, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "GREEN", (298, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "RED", (420, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "YELLOW", (520, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+    
+    cv2.imshow("Output", frame) 
     cv2.imshow("Paint", paintWindow)
 
     if cv2.waitKey(1) == ord('q'):
