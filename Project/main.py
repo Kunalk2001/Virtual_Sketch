@@ -25,57 +25,61 @@ colorIndex = 0
 
 # Here is code for Canvas setup
 paintWindow = np.zeros((471,636,3)) + 255
-paintWindow = cv2.rectangle(paintWindow, (40,1), (140,65), (0,0,0), 2)
-paintWindow = cv2.rectangle(paintWindow, (160,1), (255,65), (255,0,0), 2)
-paintWindow = cv2.rectangle(paintWindow, (275,1), (370,65), (0,255,0), 2)
-paintWindow = cv2.rectangle(paintWindow, (390,1), (485,65), (0,0,255), 2)
-paintWindow = cv2.rectangle(paintWindow, (505,1), (600,65), (0,255,255), 2)
+paintWindow = cv2.rectangle(paintWindow, (10,1), (100,65), (0,0,0), 2)  # CLEAR
+paintWindow = cv2.rectangle(paintWindow, (115,1), (205,65), (255,0,0), 2)   # BLUE
+paintWindow = cv2.rectangle(paintWindow, (220,1), (315,65), (0,255,0), 2)   # GREEN
+paintWindow = cv2.rectangle(paintWindow, (330,1), (420,65), (0,0,255), 2)   # RED
+paintWindow = cv2.rectangle(paintWindow, (435,1), (520,65), (0,255,255), 2) # YELLOW
+paintWindow = cv2.rectangle(paintWindow, (535, 1), (625, 65), (0, 0, 0), 2)  # SAVE
 
-cv2.putText(paintWindow, "CLEAR", (49, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-cv2.putText(paintWindow, "BLUE", (185, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-cv2.putText(paintWindow, "GREEN", (298, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-cv2.putText(paintWindow, "RED", (420, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-cv2.putText(paintWindow, "YELLOW", (520, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+cv2.putText(paintWindow, "CLEAR", (25, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+cv2.putText(paintWindow, "BLUE", (135, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+cv2.putText(paintWindow, "GREEN", (235, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+cv2.putText(paintWindow, "RED", (355, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+cv2.putText(paintWindow, "YELLOW", (443, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+cv2.putText(paintWindow, "SAVE", (555, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
 cv2.namedWindow('Paint', cv2.WINDOW_AUTOSIZE)
+
 
 # initialize mediapipe
 mpHands = mp.solutions.hands
 hands = mpHands.Hands(max_num_hands=1, min_detection_confidence=0.66)
 mpDraw = mp.solutions.drawing_utils
 
+
 # Initialize the webcam
 cap = cv2.VideoCapture(0)
 ret = True
 while ret:
     ret, frame = cap.read()
-    if not ret:
-        break
-    
+
+    x, y, c = frame.shape
+
     frame = cv2.flip(frame, 1)
     framergb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    frame = cv2.rectangle(frame, (10,1), (100,65), (0,0,0), 2)  # CLEAR
+    frame = cv2.rectangle(frame, (115,1), (205,65), (255,0,0), 2)   # BLUE
+    frame = cv2.rectangle(frame, (220,1), (315,65), (0,255,0), 2)   # GREEN
+    frame = cv2.rectangle(frame, (330,1), (420,65), (0,0,255), 2)   # RED
+    frame = cv2.rectangle(frame, (435,1), (520,65), (0,255,255), 2) # YELLOW
+    frame = cv2.rectangle(frame, (535, 1), (625, 65), (0, 0, 0), 2)  # SAVE
     
-    frame = cv2.rectangle(frame, (40,1), (140,65), (0,0,0), 2)
-    frame = cv2.rectangle(frame, (160,1), (255,65), (255,0,0), 2)
-    frame = cv2.rectangle(frame, (275,1), (370,65), (0,255,0), 2)
-    frame = cv2.rectangle(frame, (390,1), (485,65), (0,0,255), 2)
-    frame = cv2.rectangle(frame, (505,1), (600,65), (0,255,255), 2)
-    cv2.putText(frame, "CLEAR", (49, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(frame, "BLUE", (185, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(frame, "GREEN", (298, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(frame, "RED", (420, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(frame, "YELLOW", (520, 33), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-    
-    # get hand landmark prediction
+    cv2.putText(frame, "CLEAR", (25, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "BLUE", (135, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "GREEN", (235, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "RED", (355, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "YELLOW", (443, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(frame, "SAVE", (555, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2, cv2.LINE_AA)
+
+    # Get hand landmark prediction
     result = hands.process(framergb)
-    
+
     # post process the result
     if result.multi_hand_landmarks:
         landmarks = []
         for handslms in result.multi_hand_landmarks:
             for lm in handslms.landmark:
-                # # print(id, lm)
-                # print(lm.x)
-                # print(lm.y)
                 lmx = int(lm.x * 640)
                 lmy = int(lm.y * 480)
 
@@ -100,7 +104,7 @@ while ret:
             yellow_index += 1
 
         elif center[1] <= 65:
-            if 40 <= center[0] <= 140: # Clear Button
+            if 10 <= center[0] <= 100: # Clear Button
                 bpoints = [deque(maxlen=512)]
                 gpoints = [deque(maxlen=512)]
                 rpoints = [deque(maxlen=512)]
@@ -112,14 +116,17 @@ while ret:
                 yellow_index = 0
 
                 paintWindow[67:,:,:] = 255
-            elif 160 <= center[0] <= 255:
+            elif 115 <= center[0] <= 205:
                     colorIndex = 0 # Blue
-            elif 275 <= center[0] <= 370:
+            elif 220 <= center[0] <= 315:
                     colorIndex = 1 # Green
-            elif 390 <= center[0] <= 485:
+            elif 330 <= center[0] <= 420:
                     colorIndex = 2 # Red
-            elif 505 <= center[0] <= 600:
+            elif 435 <= center[0] <= 520:
                     colorIndex = 3 # Yellow
+            elif 535 <= center[0] <= 625:  # Save button
+                cv2.imwrite("drawing.png", paintWindow)
+                print("Canvas saved as 'drawing.png'")
         else :
             if colorIndex == 0:
                 bpoints[blue_index].appendleft(center)
@@ -129,7 +136,7 @@ while ret:
                 rpoints[red_index].appendleft(center)
             elif colorIndex == 3:
                 ypoints[yellow_index].appendleft(center)
-    # Append the next deques when nothing is detected to avoid messing up
+    # Append the next deques when nothing is detected
     else:
         bpoints.append(deque(maxlen=512))
         blue_index += 1
@@ -150,13 +157,12 @@ while ret:
                 cv2.line(frame, points[i][j][k - 1], points[i][j][k], colors[i], 2)
                 cv2.line(paintWindow, points[i][j][k - 1], points[i][j][k], colors[i], 2)
 
-
     cv2.imshow("Output", frame) 
     cv2.imshow("Paint", paintWindow)
 
     if cv2.waitKey(1) == ord('q'):
         break
-    
-# Release the resources
+
+# release the webcam and destroy all active windows
 cap.release()
 cv2.destroyAllWindows()
